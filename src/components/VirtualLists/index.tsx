@@ -16,13 +16,12 @@ export default function VirtualList(props: PropsType) {
 
   const { listData = initData, itemSize = 50} = props
   
-  // 获取容器的高度
   const [start, setStart] = useState(0)
   const [startOffset, setStartOffset] = useState(0)
   const [containerHeight, setContainerHeight] = useState(0)
 
   const listHieght = useMemo(()=> listData.length * itemSize, [listData, itemSize])
-  const visableCount = useMemo(() => Math.floor(containerHeight / itemSize), [containerHeight, itemSize])
+  const visableCount = useMemo(() => Math.ceil(containerHeight / itemSize), [containerHeight, itemSize])
   const end = useMemo(() => start + visableCount, [start, visableCount])
   const visiableData = useMemo(() => listData.slice(start, end), [listData, start, end])
   const getTransform = useMemo(() => `translate3d(0,${startOffset}px,0)`, [startOffset])
